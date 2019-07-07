@@ -6,6 +6,7 @@ import numpy as np
 import osmnx as ox
 import pandas as pd
 import geopandas as gpd
+import collections
 import logging as lg
 
 ox.config(log_console=True, use_cache=True)
@@ -49,16 +50,43 @@ def _gdf_from_places(queries):
 
 
 # define the study sites as label : query
-places = {'大连': {'query_str': '大连市', 'which_result': 2},
-#'广州': {'query_str': '广州市', 'which_result': 2},
-#'天津': {'query_str': '天津市', 'which_result': 2},
-#'北京': {'query_str': '北京市', 'which_result': 2},
-#'上海': {'query_str': '上海市', 'which_result': 2},
-'武汉': {'query_str': '武汉市', 'which_result': 2},
-#          '长沙': {'query_str': 'changsha, hunan, China', 'which_result': 2},
-          # '济南': 'jinan, shandong, China',
-          # '重庆': {'state': 'Chongqing', 'country': 'China'},
-#          '成都': {'query_str': '成都市, 四川省, 中国', 'which_result': 1}
+places = {
+# '大连': {'query_str': '大连市', 'which_result': 2},
+# '广州': {'query_str': '广州市', 'which_result': 2},
+# '天津': {'query_str': '天津市', 'which_result': 2},
+# '北京': {'query_str': '北京市', 'which_result': 2},
+# '上海': {'query_str': '上海市', 'which_result': 2},
+# '武汉': {'query_str': '武汉市', 'which_result': 2},
+# '沈阳': {'query_str': '沈阳市', 'which_result': 1},
+# '南京': {'query_str': '南京市', 'which_result': 1},
+# '哈尔滨': {'query_str': '哈尔滨市', 'which_result': 1},
+# '太原': {'query_str': '太原市', 'which_result': 1},
+# '重庆': {'query_str': '重庆市', 'which_result': 2},
+# '青岛': {'query_str': '青岛市', 'which_result': 1},
+# '成都': {'query_str': '成都市', 'which_result': 1},
+# '西安': {'query_str': '西安市', 'which_result': 2},
+# '济南': {'query_str': '济南市', 'which_result': 1},
+# '长春': {'query_str': '长春市', 'which_result': 1},
+# '长沙': {'query_str': '长沙市', 'which_result': 2},
+# '杭州': {'query_str': '杭州市', 'which_result': 2},
+# '深圳': {'query_str': '深圳市', 'which_result': 1},
+# '乌鲁木齐': {'query_str': '乌鲁木齐市', 'which_result': 1},
+# '郑州': {'query_str': '郑州市', 'which_result': 2},
+# '昆明': {'query_str': '昆明市', 'which_result': 1},
+# '兰州': {'query_str': '兰州市', 'which_result': 2},
+# '贵阳': {'query_str': '贵阳市', 'which_result': 1},
+# '合肥': {'query_str': '合肥市', 'which_result': 2},
+# '石家庄': {'query_str': '石家庄市', 'which_result': 1},
+# '福州': {'query_str': '福州市', 'which_result': 1},
+ '南宁': {'query_str': '南宁市', 'which_result': 2},
+ '宁波': {'query_str': '宁波市', 'which_result': 1},
+'呼和浩特': {'query_str': '呼和浩特市', 'which_result': 2},
+#'厦门': {'query_str': '厦门市', 'which_result': 2},
+'南昌': {'query_str': '南昌市', 'which_result': 1},
+'海口': {'query_str': '海口市', 'which_result': 1},
+'西宁': {'query_str': '西宁市', 'which_result': 2},
+'银川': {'query_str': '银川市', 'which_result': 1},
+'拉萨': {'query_str': '拉萨市', 'which_result': 2}
 }
 
 # verify OSMnx geocodes each query to what you expect
@@ -76,7 +104,7 @@ for place in sorted(places.keys()):
     # get the graph
     query = places[place]['query_str']
     which_result = places[place]['which_result']
-    G = ox.graph_from_place(query, network_type='drive',which_result=which_result)
+    G = ox.graph_from_place(query, network_type='drive', which_result=which_result)
 
     # calculate edge bearings
     Gu = ox.add_edge_bearings(ox.get_undirected(G))
@@ -107,11 +135,11 @@ def count_and_merge(n, bearings):
 
 
 # function to draw a polar histogram for a set of edge bearings
-def polar_plot(ax, bearings, n=36, title=''):
+def polar_plot(ax, place, frequency, bearings, n=36, title=''):
     bins = np.arange(n + 1) * 360 / n
-    count = count_and_merge(n, bearings)
+    #count = count_and_merge(n, bearings)
     _, division = np.histogram(bearings, bins=bins)
-    frequency = count / count.sum()
+
     division = division[0:-1]
     width = 2 * np.pi / n
 
@@ -147,14 +175,28 @@ nrows = int(np.ceil(n / ncols))
 figsize = (ncols * 5, nrows * 5)
 fig, axes = plt.subplots(nrows, ncols, figsize=figsize, subplot_kw={'projection': 'polar'})
 
+entropy={}
+frequency={}
+#计算熵并按照熵进行城市排序
+for ax, place in zip(axes.flat, places.keys()):
+    count = count_and_merge(36, bearings[place].dropna())
+    #计算频率并记录
+    frequencyLocal = count / count.sum()
+    frequency[place]=frequencyLocal
+    # 计算熵并记录
+    entropy[place] = np.add.reduce(-frequencyLocal * np.log(frequencyLocal))
+
+sorted_entropy=collections.OrderedDict(sorted(entropy.items(),key = lambda x:x[1]))
 # plot each city's polar histogram
-for ax, place in zip(axes.flat, sorted(places.keys())):
-    polar_plot(ax, bearings[place].dropna(), title=place)
+for ax, place in zip(axes.flat, sorted_entropy):
+    polar_plot(ax, place, frequency[place], bearings[place].dropna(), title=place)
 
 # add super title and save full image
 suptitle_font = {'family': 'Century Gothic', 'fontsize': 60, 'fontweight': 'normal', 'y': 1.07}
 # fig.suptitle('City Street Network Orientation', **suptitle_font)
 fig.tight_layout()
 fig.subplots_adjust(hspace=0.35)
-fig.savefig('street-orientations.png', dpi=120, bbox_inches='tight')
+fig.savefig('street-orientations1-9.png', dpi=120, bbox_inches='tight')
 plt.close()
+print(sorted_entropy)
+print('Mission Successful')
