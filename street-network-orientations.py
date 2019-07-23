@@ -6,7 +6,7 @@ import numpy as np
 import osmnx as ox
 import pandas as pd
 import geopandas as gpd
-import logging as lg
+import collections
 
 ox.config(log_console=True, use_cache=True)
 weight_by_length = False
@@ -139,6 +139,7 @@ def polar_plot(ax, bearings, n=36, title=''):
     count = count_and_merge(n, bearings)
     _, division = np.histogram(bearings, bins=bins)
     frequency = count / count.sum()
+
     division = division[0:-1]
     width = 2 * np.pi / n
 
@@ -174,15 +175,28 @@ nrows = int(np.ceil(n / ncols))
 figsize = (ncols * 5, nrows * 5)
 fig, axes = plt.subplots(nrows, ncols, figsize=figsize, subplot_kw={'projection': 'polar'})
 
+entropy={}
+frequency={}
+#计算熵并按照熵进行城市排序
+for ax, place in zip(axes.flat, places.keys()):
+    count = count_and_merge(36, bearings[place].dropna())
+    #计算频率并记录
+    frequencyLocal = count / count.sum()
+    frequency[place]=frequencyLocal
+    # 计算熵并记录
+    entropy[place] = np.add.reduce(-frequencyLocal * np.log(frequencyLocal))
+
+sorted_entropy=collections.OrderedDict(sorted(entropy.items(),key = lambda x:x[1]))
 # plot each city's polar histogram
-for ax, place in zip(axes.flat, sorted(places.keys())):
-    polar_plot(ax, bearings[place].dropna(), title=place)
+for ax, place in zip(axes.flat, sorted_entropy):
+    polar_plot(ax, place, frequency[place], bearings[place].dropna(), title=place)
 
 # add super title and save full image
 suptitle_font = {'family': 'Century Gothic', 'fontsize': 60, 'fontweight': 'normal', 'y': 1.07}
 # fig.suptitle('City Street Network Orientation', **suptitle_font)
 fig.tight_layout()
 fig.subplots_adjust(hspace=0.35)
-fig.savefig('street-orientations19-27.png', dpi=120, bbox_inches='tight')
+fig.savefig('street-orientations1-9.png', dpi=120, bbox_inches='tight')
 plt.close()
+print(sorted_entropy)
 print('Mission Successful')
