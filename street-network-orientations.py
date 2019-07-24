@@ -78,14 +78,14 @@ places = {
 # '合肥': {'query_str': '合肥市', 'which_result': 2},
 # '石家庄': {'query_str': '石家庄市', 'which_result': 1},
 # '福州': {'query_str': '福州市', 'which_result': 1},
- '南宁': {'query_str': '南宁市', 'which_result': 2},
- '宁波': {'query_str': '宁波市', 'which_result': 1},
-'呼和浩特': {'query_str': '呼和浩特市', 'which_result': 2},
+# '南宁': {'query_str': '南宁市', 'which_result': 2},
+# '宁波': {'query_str': '宁波市', 'which_result': 1},
+#'呼和浩特': {'query_str': '呼和浩特市', 'which_result': 2},
 #'厦门': {'query_str': '厦门市', 'which_result': 2},
-'南昌': {'query_str': '南昌市', 'which_result': 1},
+#'南昌': {'query_str': '南昌市', 'which_result': 1},
 '海口': {'query_str': '海口市', 'which_result': 1},
-'西宁': {'query_str': '西宁市', 'which_result': 2},
-'银川': {'query_str': '银川市', 'which_result': 1},
+#'西宁': {'query_str': '西宁市', 'which_result': 2},
+#'银川': {'query_str': '银川市', 'which_result': 1},
 '拉萨': {'query_str': '拉萨市', 'which_result': 2}
 }
 
