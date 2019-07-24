@@ -7,7 +7,6 @@ import osmnx as ox
 import pandas as pd
 import geopandas as gpd
 import collections
-import logging as lg
 
 ox.config(log_console=True, use_cache=True)
 weight_by_length = False
@@ -135,10 +134,11 @@ def count_and_merge(n, bearings):
 
 
 # function to draw a polar histogram for a set of edge bearings
-def polar_plot(ax, place, frequency, bearings, n=36, title=''):
+def polar_plot(ax, bearings, n=36, title=''):
     bins = np.arange(n + 1) * 360 / n
-    #count = count_and_merge(n, bearings)
+    count = count_and_merge(n, bearings)
     _, division = np.histogram(bearings, bins=bins)
+    frequency = count / count.sum()
 
     division = division[0:-1]
     width = 2 * np.pi / n
