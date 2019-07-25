@@ -50,44 +50,41 @@ def _gdf_from_places(queries):
 
 # define the study sites as label : query
 places = {
-'石家庄市': {'query_str': '石家庄市', 'which_result': 1},
-'西安市': {'query_str': '西安市', 'which_result': 2},
-'郑州市': {'query_str': '郑州市', 'which_result': 2},
-'太原市': {'query_str': '太原市', 'which_result': 1},
-'北京市': {'query_str': '北京市', 'which_result': 2},
-'青岛市': {'query_str': '青岛市', 'which_result': 1},
-'济南市': {'query_str': '济南市', 'which_result': 1},
-'银川市': {'query_str': '银川市', 'which_result': 1},
-'呼和浩特市': {'query_str': '呼和浩特市', 'which_result': 2},
-'长沙市': {'query_str': '长沙市', 'which_result': 2},
-'合肥市': {'query_str': '合肥市', 'which_result': 2},
-'长春市': {'query_str': '长春市', 'which_result': 1},
-'拉萨市': {'query_str': '拉萨市', 'which_result': 2},
-'海口市': {'query_str': '海口市', 'which_result': 1},
-'上海市': {'query_str': '上海市', 'which_result': 2},
-'南昌市': {'query_str': '南昌市', 'which_result': 1},
-'兰州市': {'query_str': '兰州市', 'which_result': 2},
-'哈尔滨市': {'query_str': '哈尔滨市', 'which_result': 1},
-'天津市': {'query_str': '天津市', 'which_result': 2},
-'南宁市': {'query_str': '南宁市', 'which_result': 2},
-'杭州市': {'query_str': '杭州市', 'which_result': 2},
-'深圳市': {'query_str': '深圳市', 'which_result': 1},
-'沈阳市': {'query_str': '沈阳市', 'which_result': 1},
-'宁波市': {'query_str': '宁波市', 'which_result': 1},
-'乌鲁木齐市': {'query_str': '乌鲁木齐市', 'which_result': 1},
-'武汉市': {'query_str': '武汉市', 'which_result': 2},
-'广州市': {'query_str': '广州市', 'which_result': 2},
-'重庆市': {'query_str': '重庆市', 'which_result': 2},
-'南京市': {'query_str': '南京市', 'which_result': 1},
-'大连市': {'query_str': '大连市', 'which_result': 2},
-'贵阳市': {'query_str': '贵阳市', 'which_result': 1},
-'成都市': {'query_str': '成都市', 'which_result': 1},
-'西宁市': {'query_str': '西宁市', 'which_result': 2},
-'福州市': {'query_str': '福州市', 'which_result': 1},
-'昆明市': {'query_str': '昆明市', 'which_result': 1}
-#'西宁': {'query_str': '西宁市', 'which_result': 2},
-#'银川': {'query_str': '银川市', 'which_result': 1},
-#'拉萨': {'query_str': '拉萨市', 'which_result': 2}
+ '石家庄市': {'query_str': '石家庄市', 'which_result': 1},
+# '西安市': {'query_str': '西安市', 'which_result': 2},
+# '郑州市': {'query_str': '郑州市', 'which_result': 2},
+# '太原市': {'query_str': '太原市', 'which_result': 1},
+# '北京市': {'query_str': '北京市', 'which_result': 2},
+# '青岛市': {'query_str': '青岛市', 'which_result': 1},
+# '济南市': {'query_str': '济南市', 'which_result': 1},
+# '银川市': {'query_str': '银川市', 'which_result': 1},
+# '呼和浩特市': {'query_str': '呼和浩特市', 'which_result': 2},
+# '长沙市': {'query_str': '长沙市', 'which_result': 2},
+# '合肥市': {'query_str': '合肥市', 'which_result': 2},
+# '长春市': {'query_str': '长春市', 'which_result': 1},
+# '拉萨市': {'query_str': '拉萨市', 'which_result': 2},
+# '海口市': {'query_str': '海口市', 'which_result': 1},
+# '上海市': {'query_str': '上海市', 'which_result': 2},
+# '南昌市': {'query_str': '南昌市', 'which_result': 1},
+# '兰州市': {'query_str': '兰州市', 'which_result': 2},
+# '哈尔滨市': {'query_str': '哈尔滨市', 'which_result': 1},
+# '天津市': {'query_str': '天津市', 'which_result': 2},
+# '南宁市': {'query_str': '南宁市', 'which_result': 2},
+# '杭州市': {'query_str': '杭州市', 'which_result': 2},
+# '深圳市': {'query_str': '深圳市', 'which_result': 1},
+# '沈阳市': {'query_str': '沈阳市', 'which_result': 1},
+# '宁波市': {'query_str': '宁波市', 'which_result': 1},
+# '乌鲁木齐市': {'query_str': '乌鲁木齐市', 'which_result': 1},
+# '武汉市': {'query_str': '武汉市', 'which_result': 2},
+# '广州市': {'query_str': '广州市', 'which_result': 2},
+# '重庆市': {'query_str': '重庆市', 'which_result': 2},
+# '南京市': {'query_str': '南京市', 'which_result': 1},
+# '大连市': {'query_str': '大连市', 'which_result': 2},
+# '贵阳市': {'query_str': '贵阳市', 'which_result': 1},
+# '成都市': {'query_str': '成都市', 'which_result': 1},
+# '西宁市': {'query_str': '西宁市', 'which_result': 2},
+# '福州市': {'query_str': '福州市', 'which_result': 1},
+ '昆明市': {'query_str': '昆明市', 'which_result': 1}
 }
 
 # verify OSMnx geocodes each query to what you expect
@@ -136,11 +133,10 @@ def count_and_merge(n, bearings):
 
 
 # function to draw a polar histogram for a set of edge bearings
-def polar_plot(ax, bearings, n=36, title=''):
+def polar_plot(ax, place, frequency, bearings, n=36, title=''):
     bins = np.arange(n + 1) * 360 / n
-    count = count_and_merge(n, bearings)
+    #count = count_and_merge(n, bearings)
     _, division = np.histogram(bearings, bins=bins)
-    frequency = count / count.sum()
 
     division = division[0:-1]
     width = 2 * np.pi / n
