@@ -50,16 +50,16 @@ def _gdf_from_places(queries):
 
 # define the study sites as label : query
 places = {
- '石家庄市': {'query_str': '石家庄市', 'which_result': 1},
+#  '石家庄市': {'query_str': '石家庄市', 'which_result': 1},
 # '西安市': {'query_str': '西安市', 'which_result': 2},
 # '郑州市': {'query_str': '郑州市', 'which_result': 2},
 # '太原市': {'query_str': '太原市', 'which_result': 1},
 # '北京市': {'query_str': '北京市', 'which_result': 2},
 # '青岛市': {'query_str': '青岛市', 'which_result': 1},
-# '济南市': {'query_str': '济南市', 'which_result': 1},
-# '银川市': {'query_str': '银川市', 'which_result': 1},
-# '呼和浩特市': {'query_str': '呼和浩特市', 'which_result': 2},
-# '长沙市': {'query_str': '长沙市', 'which_result': 2},
+ '济南市': {'query_str': '济南市', 'which_result': 1},
+ '银川市': {'query_str': '银川市', 'which_result': 1},
+  '呼和浩特市': {'query_str': '呼和浩特市', 'which_result': 2},
+ '长沙市': {'query_str': '长沙市', 'which_result': 2},
 # '合肥市': {'query_str': '合肥市', 'which_result': 2},
 # '长春市': {'query_str': '长春市', 'which_result': 1},
 # '拉萨市': {'query_str': '拉萨市', 'which_result': 2},
@@ -77,6 +77,7 @@ places = {
 # '乌鲁木齐市': {'query_str': '乌鲁木齐市', 'which_result': 1},
 # '武汉市': {'query_str': '武汉市', 'which_result': 2},
 # '广州市': {'query_str': '广州市', 'which_result': 2},
+# '厦门市': {'query_str': '思明区', 'which_result': 1},
 # '重庆市': {'query_str': '重庆市', 'which_result': 2},
 # '南京市': {'query_str': '南京市', 'which_result': 1},
 # '大连市': {'query_str': '大连市', 'which_result': 2},
@@ -84,7 +85,7 @@ places = {
 # '成都市': {'query_str': '成都市', 'which_result': 1},
 # '西宁市': {'query_str': '西宁市', 'which_result': 2},
 # '福州市': {'query_str': '福州市', 'which_result': 1},
- '昆明市': {'query_str': '昆明市', 'which_result': 1}
+# '昆明市': {'query_str': '昆明市', 'which_result': 1}
 }
 
 # verify OSMnx geocodes each query to what you expect
@@ -194,7 +195,7 @@ suptitle_font = {'family': 'Century Gothic', 'fontsize': 60, 'fontweight': 'norm
 # fig.suptitle('City Street Network Orientation', **suptitle_font)
 fig.tight_layout()
 fig.subplots_adjust(hspace=0.35)
-fig.savefig('street-orientations1-9.png', dpi=120, bbox_inches='tight')
+fig.savefig('street-orientations.png', dpi=120, bbox_inches='tight')
 plt.close()
 print(sorted_entropy)
 print('Mission Successful')
