@@ -53,13 +53,13 @@ places = {
 #  '石家庄市': {'query_str': '石家庄市', 'which_result': 1},
 # '西安市': {'query_str': '西安市', 'which_result': 2},
 # '郑州市': {'query_str': '郑州市', 'which_result': 2},
-# '太原市': {'query_str': '太原市', 'which_result': 1},
-# '北京市': {'query_str': '北京市', 'which_result': 2},
+ '太原市': {'query_str': '太原市', 'which_result': 1},
+# '北京市': {'query_str': '北京市', 'which_result': 2}
 # '青岛市': {'query_str': '青岛市', 'which_result': 1},
- '济南市': {'query_str': '济南市', 'which_result': 1},
+# '济南市': {'query_str': '济南市', 'which_result': 1},
  '银川市': {'query_str': '银川市', 'which_result': 1},
-  '呼和浩特市': {'query_str': '呼和浩特市', 'which_result': 2},
- '长沙市': {'query_str': '长沙市', 'which_result': 2},
+#  '呼和浩特市': {'query_str': '呼和浩特市', 'which_result': 2},
+# '长沙市': {'query_str': '长沙市', 'which_result': 2}
 # '合肥市': {'query_str': '合肥市', 'which_result': 2},
 # '长春市': {'query_str': '长春市', 'which_result': 1},
 # '拉萨市': {'query_str': '拉萨市', 'which_result': 2},
@@ -105,7 +105,7 @@ for place in sorted(places.keys()):
     which_result = places[place]['which_result']
     G = ox.graph_from_place(query, network_type='drive', which_result=which_result)
 
-    # calculate edge bearings
+    # 为图的边，增加bearing属性
     Gu = ox.add_edge_bearings(ox.get_undirected(G))
 
     if weight_by_length:
@@ -134,7 +134,7 @@ def count_and_merge(n, bearings):
 
 
 # function to draw a polar histogram for a set of edge bearings
-def polar_plot(ax, place, frequency, bearings, n=36, title=''):
+def polar_plot(ax, place, frequency, bearings, n=1, title=''):
     bins = np.arange(n + 1) * 360 / n
     #count = count_and_merge(n, bearings)
     _, division = np.histogram(bearings, bins=bins)
@@ -178,6 +178,7 @@ entropy={}
 frequency={}
 #计算熵并按照熵进行城市排序
 for ax, place in zip(axes.flat, places.keys()):
+    #分组统计，设置36个bins
     count = count_and_merge(36, bearings[place].dropna())
     #计算频率并记录
     frequencyLocal = count / count.sum()
@@ -195,7 +196,7 @@ suptitle_font = {'family': 'Century Gothic', 'fontsize': 60, 'fontweight': 'norm
 # fig.suptitle('City Street Network Orientation', **suptitle_font)
 fig.tight_layout()
 fig.subplots_adjust(hspace=0.35)
-fig.savefig('street-orientations.png', dpi=120, bbox_inches='tight')
+fig.savefig('street-orientations0000.png', dpi=120, bbox_inches='tight')
 plt.close()
 print(sorted_entropy)
 print('Mission Successful')
